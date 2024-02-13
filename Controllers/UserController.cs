@@ -10,6 +10,10 @@ namespace UsersApi.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        
+        [HttpPost]
+        public async Task<ActionResult> UserRegister()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
