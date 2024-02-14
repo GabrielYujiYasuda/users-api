@@ -22,6 +22,8 @@ builder.Services.AddIdentity<UserModel, IdentityRole>()
 
 builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
