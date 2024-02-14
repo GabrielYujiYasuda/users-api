@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using UsersApi.Data.Context;
 using UsersApi.Model;
 using UsersApi.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
