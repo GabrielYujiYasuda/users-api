@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using UsersApi.Data.Dtos;
 using UsersApi.Services;
@@ -19,14 +20,14 @@ namespace UsersApi.Controllers
       _userService = userService;
     }
 
-    [HttpPost("user")]
+    [HttpPost("Register")]
     public async Task<ActionResult<GetUserDto>> UserRegister(AddUserDto newUser)
     {
       var response = await _userService.UserRegister(newUser);
 
       if (response is null)
       {
-        return NotFound(response);
+        return BadRequest(response);
       }
 
       return Ok(response);

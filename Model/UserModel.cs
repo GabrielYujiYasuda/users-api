@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
+
 namespace UsersApi.Model
 {
   public class UserModel : IdentityUser

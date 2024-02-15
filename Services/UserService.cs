@@ -23,7 +23,7 @@ namespace UsersApi.Services
 
     public async Task<GetUserDto> UserRegister(AddUserDto newUser)
     {
-      var user = _mapper.Map<UserModel>(newUser);
+      UserModel user = _mapper.Map<UserModel>(newUser);
 
       var response = await _userManager.CreateAsync(user, newUser.Password);
 
@@ -32,7 +32,8 @@ namespace UsersApi.Services
         throw new Exception($"Fail to register the user.");
       }
 
-      var responseMapped = _mapper.Map<GetUserDto>(response);
+      var responseMapped = _mapper.Map<GetUserDto>(user);
+
       return responseMapped;
     }
   }
