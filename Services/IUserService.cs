@@ -9,7 +9,7 @@ namespace UsersApi.Services
 {
   public interface IUserService
   {
-
-    Task<GetUserDto> UserRegister(AddUserDto newUser);
+    Task UserRegister(AddUserDto newUser);
+    Task Login(LoginUserDto user);
   }
 }

@@ -21,16 +21,19 @@ namespace UsersApi.Controllers
     }
 
     [HttpPost("Register")]
-    public async Task<ActionResult<GetUserDto>> UserRegister(AddUserDto newUser)
+    public async Task<ActionResult> UserRegister(AddUserDto newUser)
     {
-      var response = await _userService.UserRegister(newUser);
+      await _userService.UserRegister(newUser);
 
-      if (response is null)
-      {
-        return BadRequest(response);
-      }
+      return Ok("User registered successfully.");
+    }
 
-      return Ok(response);
+    [HttpPost("Login")]
+    public async Task<ActionResult> Login(LoginUserDto user)
+    {
+      await _userService.Login(user);
+
+      return Ok("User authenticated.");
     }
   }
 }

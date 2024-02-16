@@ -14,6 +14,7 @@ namespace UsersApi.Services
   {
     private readonly IMapper _mapper;
     private readonly UserManager<UserModel> _userManager;
+    private readonly SignInManager<UserModel> _signInManager;
 
     public UserService(IMapper mapper, UserManager<UserModel> userManager)
     {
@@ -21,7 +22,19 @@ namespace UsersApi.Services
       _userManager = userManager;
     }
 
-    public async Task<GetUserDto> UserRegister(AddUserDto newUser)
+    public async Task Login(LoginUserDto user)
+    {
+      var mappedUser = _mapper.Map<UserModel>(user);
+
+      var response = await _signInManager.PasswordSignInAsync(mappedUser, user.Password, false, false);
+
+      if (!response.Succeeded)
+      {
+        throw new Exception($"User not authenticated");
+      }
+    }
+
+    public async Task UserRegister(AddUserDto newUser)
     {
       UserModel user = _mapper.Map<UserModel>(newUser);
 
@@ -32,9 +45,9 @@ namespace UsersApi.Services
         throw new Exception($"Fail to register the user.");
       }
 
-      var responseMapped = _mapper.Map<GetUserDto>(user);
-
-      return responseMapped;
+      //If the method retuns a User
+      // var responseMapped = _mapper.Map<GetUserDto>(user);
+      // return responseMapped;
     }
   }
 }
