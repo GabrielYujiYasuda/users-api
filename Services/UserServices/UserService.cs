@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using UsersApi.Data.Dtos;
 using UsersApi.Model;
+using UsersApi.Services.TokenServices;
 
 namespace UsersApi.Services
 {
@@ -15,11 +16,14 @@ namespace UsersApi.Services
     private readonly IMapper _mapper;
     private readonly UserManager<UserModel> _userManager;
     private readonly SignInManager<UserModel> _signInManager;
+    private readonly TokenService _tokenService;
 
-    public UserService(IMapper mapper, UserManager<UserModel> userManager)
+    public UserService(IMapper mapper, UserManager<UserModel> userManager, SignInManager<UserModel> signInManager, TokenService tokenService)
     {
       _mapper = mapper;
       _userManager = userManager;
+      _signInManager = signInManager;
+      _tokenService = tokenService;
     }
 
     public async Task Login(LoginUserDto user)
@@ -45,6 +49,7 @@ namespace UsersApi.Services
         throw new Exception($"Fail to register the user.");
       }
 
+      _tokenService.GenerateToken(user);
       //If the method retuns a User
       // var responseMapped = _mapper.Map<GetUserDto>(user);
       // return responseMapped;
