@@ -8,12 +8,17 @@ using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using UsersApi.Model;
 
-namespace UsersApi.Services.TokenServices
+namespace UsersApi.Services.Token
 {
-  public class TokenService : ITokenService
+  public class TokenService
   {
-    public void GenerateToken(UserModel user)
+    public string GenerateToken(UserModel user)
     {
+      if (user.UserName is null)
+      {
+        throw new Exception($"User not authenticated");
+      }
+
       Claim[] claims = new Claim[]
       {
         new Claim("username", user.UserName),
@@ -21,7 +26,7 @@ namespace UsersApi.Services.TokenServices
         new Claim(ClaimTypes.DateOfBirth, user.BirthDate.ToString())
       };
 
-      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("A95N7aiAT8V0N4V"));
+      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("65DA65DAS54D654DAS6D4A6S54D8A4D852AS4D85"));
 
       var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -29,6 +34,8 @@ namespace UsersApi.Services.TokenServices
         expires: DateTime.Now.AddMinutes(10),
         claims: claims,
         signingCredentials: signingCredentials);
+
+      return new JwtSecurityTokenHandler().WriteToken(token);
     }
   }
 }

@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using UsersApi.Data.Dtos;
 
-namespace UsersApi.Services
+namespace UsersApi.Services.User
 {
   public interface IUserService
   {
     Task UserRegister(AddUserDto newUser);
-    Task Login(LoginUserDto user);
+    Task<string> Login(LoginUserDto user);
   }
 }

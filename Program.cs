@@ -3,15 +3,17 @@ using UsersApi.Data.Context;
 using UsersApi.Model;
 using UsersApi.Services;
 using Microsoft.EntityFrameworkCore;
+using UsersApi.Services.User;
+using UsersApi.Services.Token;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<TokenService>();
 
 builder.Services.AddDbContext<UserDbContext>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -19,8 +21,6 @@ builder.Services.AddDbContext<UserDbContext>(options =>
 builder.Services.AddIdentity<UserModel, IdentityRole>()
   .AddEntityFrameworkStores<UserDbContext>()
   .AddDefaultTokenProviders();
-
-builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

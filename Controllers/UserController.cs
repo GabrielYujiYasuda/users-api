@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using UsersApi.Data.Dtos;
 using UsersApi.Services;
+using UsersApi.Services.User;
 
 namespace UsersApi.Controllers
 {
@@ -21,7 +17,7 @@ namespace UsersApi.Controllers
     }
 
     [HttpPost("Register")]
-    public async Task<ActionResult> UserRegister(AddUserDto newUser)
+    public async Task<ActionResult<GetUserDto>> UserRegister(AddUserDto newUser)
     {
       await _userService.UserRegister(newUser);
 
@@ -29,11 +25,11 @@ namespace UsersApi.Controllers
     }
 
     [HttpPost("Login")]
-    public async Task<ActionResult> Login(LoginUserDto user)
+    public async Task<ActionResult<string>> Login(LoginUserDto user)
     {
-      await _userService.Login(user);
+      var response = await _userService.Login(user);
 
-      return Ok("User authenticated.");
+      return Ok(response);
     }
   }
 }

@@ -8,8 +8,10 @@ namespace UsersApi.Data.Dtos
 {
   public class LoginUserDto
   {
+    [Required]
     public required string Username { get; set; }
     [DataType(DataType.Password)]
+
     public required string Password { get; set; }
   }
 }
