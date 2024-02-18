@@ -12,7 +12,7 @@ namespace UsersApi.Controllers
   public class AccessController : ControllerBase
   {
     [HttpGet]
-    [Authorize(Policy = "MinimalAge")]
+    [Authorize(Policy = "MinimumAge")]
     public ActionResult Get()
     {
       return Ok("Access allowed");

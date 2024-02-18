@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace UsersApi.Auth
 {
-  public class MinimalAge : IAuthorizationRequirement
+  public class MinimumAge : IAuthorizationRequirement
   {
-    public MinimalAge(int age)
+    public MinimumAge(int age)
     {
       Age = age;
     }

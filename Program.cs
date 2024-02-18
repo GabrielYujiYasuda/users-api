@@ -21,8 +21,8 @@ builder.Services.AddSingleton<IAuthorizationHandler, AgeAuth>();
 
 builder.Services.AddAuthorization(options =>
 {
-  options.AddPolicy("MinimalAge",
-    policy => policy.AddRequirements(new MinimalAge(18)));
+  options.AddPolicy("MinimumAge",
+    policy => policy.AddRequirements(new MinimumAge(18)));
 });
 
 builder.Services.AddDbContext<UserDbContext>(options =>

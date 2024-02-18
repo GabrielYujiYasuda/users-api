@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace UsersApi.Auth
 {
-  public class AgeAuth : AuthorizationHandler<MinimalAge>
+  public class AgeAuth : AuthorizationHandler<MinimumAge>
   {
-    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, MinimalAge requirement)
+    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, MinimumAge requirement)
     {
       var birthDateClaim = context.User.FindFirst(claim => claim.Type == ClaimTypes.DateOfBirth);
 
