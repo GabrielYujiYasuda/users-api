@@ -5,6 +5,8 @@ using UsersApi.Services;
 using Microsoft.EntityFrameworkCore;
 using UsersApi.Services.User;
 using UsersApi.Services.Token;
+using UsersApi.Auth;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,14 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<TokenService>();
+
+builder.Services.AddSingleton<IAuthorizationHandler, AgeAuth>();
+
+builder.Services.AddAuthorization(options =>
+{
+  options.AddPolicy("MinimalAge",
+    policy => policy.AddRequirements(new MinimalAge(18)));
+});
 
 builder.Services.AddDbContext<UserDbContext>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
